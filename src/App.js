@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { playNote, playScale } from "./piano";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
+      <h1>🎹 Virtual Pianist</h1>
+      <button onClick={() => playScale()}>Play Scale</button>
+      <div style={{ marginTop: "20px" }}>
+        {["C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5"].map((note) => (
+          <button
+            key={note}
+            onClick={() => playNote(note)}
+            style={{ margin: "5px", padding: "10px 20px" }}
+          >
+            {note}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
