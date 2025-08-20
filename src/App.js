@@ -1,6 +1,7 @@
 import React from "react";
-import { playNote, playScale } from "./piano";
+//import { playNote, playScale } from "./piano";
 import "./App.css";
+import { playNote, playScale, playMyHeartWillGoOn } from "./piano";
 
 function App() {
   // Define all 88 piano keys (A0 to C8)
@@ -18,6 +19,10 @@ function App() {
 
   return (
     <div className="piano-container">
+      <button className="play-scale-btn" onClick={() => playMyHeartWillGoOn()}>
+  🎂 Play Happy Birthday
+</button>
+
       <h1 className="piano-title">🎹 Virtual Pianist</h1>
       <button className="play-scale-btn" onClick={() => playScale()}>Play Scale</button>
       <div className="piano-keys">

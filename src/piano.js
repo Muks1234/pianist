@@ -83,3 +83,70 @@ export async function playScale() {
     sampler.triggerAttackRelease(note, "8n", now + i * 0.25);
   });
 }
+
+export async function playMyHeartWillGoOn() {
+  await initSampler();
+  if (!samplerReady) {
+    console.warn("Sampler not ready yet...");
+    return;
+  }
+
+  const now = Tone.now();
+
+  // Intro: Arpeggiated C major chord
+  const intro = [
+    { note: "C3", time: -2.25, velocity: 0.6 },
+    { note: "E3", time: -1.875, velocity: 0.6 },
+    { note: "G3", time: -1.5, velocity: 0.6 },
+    { note: "C4", time: -1.125, velocity: 0.6 },
+    { note: "G3", time: -0.75, velocity: 0.6 },
+    { note: "E3", time: -0.375, velocity: 0.6 },
+  ];
+
+  // Main melody (in C major, ~80 BPM, 0.75s per beat)
+  const melody = [
+    { note: "C4", time: 0, velocity: 0.8 }, { note: "C4", time: 0.75, velocity: 0.8 }, // Twin-kle, twin-kle
+    { note: "G4", time: 1.5, velocity: 0.8 }, { note: "G4", time: 2.25, velocity: 0.8 }, // lit-tle star
+    { note: "A4", time: 3.0, velocity: 0.8 }, { note: "A4", time: 3.75, velocity: 0.8 }, // how I won-der
+    { note: "G4", time: 4.5, velocity: 0.8 }, // what you are
+
+    { note: "F4", time: 6.0, velocity: 0.8 }, { note: "F4", time: 6.75, velocity: 0.8 }, // Up a-bove the
+    { note: "E4", time: 7.5, velocity: 0.8 }, { note: "E4", time: 8.25, velocity: 0.8 }, // world so high
+    { note: "D4", time: 9.0, velocity: 0.8 }, { note: "D4", time: 9.75, velocity: 0.8 }, // like a dia-mond
+    { note: "C4", time: 10.5, velocity: 0.8 }, // in the sky
+
+    { note: "G4", time: 12.0, velocity: 0.9 }, { note: "G4", time: 12.75, velocity: 0.9 }, // Twin-kle, twin-kle
+    { note: "F4", time: 13.5, velocity: 0.9 }, { note: "F4", time: 14.25, velocity: 0.9 }, // lit-tle star
+    { note: "E4", time: 15.0, velocity: 0.9 }, { note: "E4", time: 15.75, velocity: 0.9 }, // how I won-der
+    { note: "D4", time: 16.5, velocity: 0.9 }, // what you are
+  ];
+
+  // Chords (four-note chords in C major)
+  const chords = [
+    { notes: ["C3", "E3", "G3", "C4"], time: 0, velocity: 0.7 },    // C major
+    { notes: ["F2", "A2", "C3", "F3"], time: 3.0, velocity: 0.7 },  // F major
+    { notes: ["G2", "B2", "D3", "G3"], time: 6.0, velocity: 0.7 },  // G major
+    { notes: ["C3", "E3", "G3", "C4"], time: 9.0, velocity: 0.7 },  // C major
+    { notes: ["F2", "A2", "C3", "F3"], time: 12.0, velocity: 0.7 }, // F major
+    { notes: ["G2", "B2", "D3", "G3"], time: 15.0, velocity: 0.7 }, // G major
+    // Outro: Big C major chord
+    { notes: ["C2", "E3", "G3", "C4", "E4"], time: 18.0, velocity: 0.8 },
+  ];
+
+  // Play intro
+  intro.forEach(({ note, time, velocity }) => {
+    sampler.triggerAttackRelease(note, "8n", now + time, velocity);
+  });
+
+  // Play melody
+  melody.forEach(({ note, time, velocity }) => {
+    sampler.triggerAttackRelease(note, "4n", now + time, velocity);
+  });
+
+  // Play chords
+  chords.forEach(({ notes, time, velocity }) => {
+    notes.forEach((note) => {
+      sampler.triggerAttackRelease(note, "2n", now + time, velocity);
+    });
+  });
+}
